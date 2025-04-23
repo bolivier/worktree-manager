@@ -1,6 +1,7 @@
 (ns worktree-maker.git
   (:require
-   [babashka.process :refer [*defaults* process shell]]
+   [babashka.process :as p :refer [*defaults*]]
+   [worktree-maker.result :as r]
    [clojure.string :as str]))
 
 (def worktree-dir "/Users/brandon/work/usecanopy-worktrees")
@@ -21,23 +22,29 @@
   (def test-branch-name "patrick/CAN-6019-update-pull-terminology-to-submission"))
 
 (defn fetch-remote-branches []
-  @(process "git fetch origin"))
+  (try
+    @(p/process "git fetch origin")
+    (r/ok)
+    (catch Exception _
+      (r/error "Failed to fetch origin."))))
 
 (defn branch-exists? [branch-name]
   (let [command (str "git show-ref --verify --quiet refs/heads/" branch-name)]
-    (->> (process command)
+    (->> (p/process command)
          deref
          :exit
          zero?)))
 
 (defn create-local-branch [branch-name]
   (let [remote-branch-name (str "origin/" branch-name)
-        result @(process (join "git branch " branch-name remote-branch-name))]
-    (when-not (zero? (:exit result))
-        (println (slurp (:err result))))))
+        result @(p/process (join "git branch " branch-name remote-branch-name))]
+    (if-not (zero? (:exit result))
+      (r/error (slurp (:err result)))
+      (r/ok))))
 
 (defn ensure-branch-exists [branch-name]
-  (when-not (branch-exists? branch-name)
+  (if (branch-exists? branch-name)
+    (r/ok nil)
     (create-local-branch branch-name)))
 
 (defn add-worktree
@@ -49,12 +56,18 @@
                       "-B " branch-name
                       path
                       branch-name)
-        exit (:exit @command)]
-    (when-not (zero? exit)
-      (println (slurp (:err command))))))
+
+        process @(p/process command)
+
+        {:keys [exit err]} process]
+    (if (zero? exit)
+      (r/ok)
+      (r/error (slurp err)))))
 
 (defn remove-worktree [branch-name]
-  (let [dirname (str worktree-dir "/" branch-name)]
-    (:out (shell {:out :string
-                  :dir main-worktree-dir}
-                 (str "git worktree remove " dirname)))))
+  (let [dirname (str worktree-dir "/" branch-name)
+        process (p/process (str "git worktree remove " dirname))
+          {:keys [exit err]} @process]
+    (if (zero? exit)
+      (r/ok)
+      (r/error (slurp err)))))
