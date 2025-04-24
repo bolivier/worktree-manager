@@ -57,5 +57,9 @@
     str/split-lines
     (map #(first (str/split % #" ")))))
 
+(defn list-branches []
+  "git for-each-ref --format='%(refname:short)' refs/heads/")
+
+
 (comment
   (def test-branch-name "patrick/CAN-6019-update-pull-termidnology-to-submission"))

@@ -21,12 +21,19 @@
    (let [process (execute-processes (git/list-worktrees))]
      (git/extract-worktree-paths (:out process)))))
 
+(def available-branches
+  (:out (execute-processes (git/list-branches))))
+
 (defn complete [args]
   (let [[prev curr] (take-last 2 (conj args ""))]
     (cond
       (or (= prev "remove")
           (= curr "remove"))
       (println (str/join "\n" available-worktrees))
+
+      (or (= prev "create")
+          (= curr "create"))
+      (println available-branches)
 
       :else
       (println ""))))
