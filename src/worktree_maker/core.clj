@@ -45,16 +45,29 @@
 
 (def cli-spec
   {:args [:command :branch]
-   :args->opts [:command :branch]
-   :options {}})
+   :args->opts [:command :branch :help]
+   :alias {:h :help}
+   :options {:help {:desc "Show this help menu"
+                    :coerce :boolean}}})
+
+(defn print-help-menu []
+  (println "Usage: wtm <command> [options]")
+  (println)
+  (println "Commands:")
+  (println "  create <branch>     Create a new worktree for the given branch")
+  (println "  remove <wt-path>    Remove an existing worktree"))
 
 (defn -main [& args]
-  (let [{:keys [branch command]} (:opts (parse-args args cli-spec))]
-    (case command
-      "_complete" (complete args)
-      "create" (checkout-worktree branch)
-      "remove" (delete-worktree branch)
+  (let [{:keys [branch command help]} (:opts (parse-args args cli-spec))]
+    (cond
+      help (print-help-menu)
 
+      (= command "_complete") (complete args)
+      (= command "create") (checkout-worktree branch)
+      (= command "remove") (delete-worktree branch)
+
+
+      :else
       (println "Unsupported option"))))
 
 (comment
