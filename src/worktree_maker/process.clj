@@ -4,8 +4,8 @@
   A `process` here is a result from calling `babashka.process/process`. It
   conceptually wraps a subprocess and has keys like `:exit` `:err` and `:out`.
 
-  NOTE: `nil` is considered a valid \"empty\" process. It is a null process and
-  anything that handles processes, needs to handle `nil`. This should mostly be
+  NOTE: `nil` is considered a valid process. It is a null process and anything
+  that handles processes, needs to handle `nil`. This should mostly be
   automatic."
   (:require [babashka.process :as p]))
 

@@ -4,7 +4,6 @@
    [worktree-maker.config :as config]
    [clojure.string :as str]))
 
-
 (alter-var-root
  (var *defaults*)
  (fn [defaults]
@@ -58,7 +57,3 @@
 
 (defn list-branches []
   "git for-each-ref --format='%(refname:short)' refs/heads/")
-
-
-(comment
-  (def test-branch-name "patrick/CAN-6019-update-pull-termidnology-to-submission"))

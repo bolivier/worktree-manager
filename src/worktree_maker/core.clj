@@ -8,10 +8,9 @@
    [worktree-maker.process :refer [execute-processes]]))
 
 (defn checkout-worktree [branch-name]
-  (let [result (execute-processes
-                (git/fetch-remote-branches)
-                (git/ensure-branch-exists branch-name)
-                (git/add-worktree branch-name))]
+  (let [result (execute-processes (git/fetch-remote-branches)
+                                  (git/ensure-branch-exists branch-name)
+                                  (git/add-worktree branch-name))]
     (if (zero? (:exit @result))
       (code-setup/npm-ci branch-name)
       (println (:err result)))))
@@ -46,7 +45,7 @@
 
 (def cli-spec
   {:args [:command :branch]
-   :args->opts [:command :branch :help]
+   :args->opts [:command :branch]
    :alias {:h :help}
    :options {:help {:desc "Show this help menu"
                     :coerce :boolean}}})
@@ -56,7 +55,10 @@
   (println)
   (println "Commands:")
   (println "  create <branch>     Create a new worktree for the given branch")
-  (println "  remove <wt-path>    Remove an existing worktree"))
+  (println "  remove <wt-path>    Remove an existing worktree")
+  (println)
+  (println "Options:")
+  (println "  --help              Print this help menu"))
 
 (defn -main [& args]
   (let [{:keys [branch command help]} (:opts (parse-args args cli-spec))]
@@ -70,6 +72,3 @@
 
       :else
       (println "Unsupported option"))))
-
-(comment
-  (def args '("create" "patrick/CAN-6019-update-pull-terminology-to-submission2")))
