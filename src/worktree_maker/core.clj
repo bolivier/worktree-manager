@@ -28,7 +28,6 @@
       :else
       (println ""))))
 
-
 (def cli-spec
   {:args [:command :branch]
    :args->opts [:command :branch]
