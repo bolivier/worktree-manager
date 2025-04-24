@@ -28,21 +28,23 @@
   (let [remote-branch-name (str "origin/" branch-name)]
     (join "git branch " branch-name remote-branch-name)))
 
+(defn branch-name->path [branch-name]
+  (str worktree-dir "/" branch-name))
+
 (defn ensure-branch-exists [branch-name]
   {:command (branch-exists? branch-name)
    :on-failure (create-local-branch branch-name)})
 
 (defn add-worktree [branch-name]
-  (let [path (str worktree-dir "/" branch-name)]
+  (let [path (branch-name->path branch-name)]
    {:command (join "git worktree add"
                "-B " branch-name
                path
                branch-name)
     :pre-check (branch-exists? branch-name)}))
 
-(defn remove-worktree [branch-name]
-  (let [dirname (str worktree-dir "/" branch-name)]
-    (str "git worktree remove " dirname)))
+(defn remove-worktree [path]
+  (str "git worktree remove " path))
 
 (defn list-worktrees []
   "git worktree list")

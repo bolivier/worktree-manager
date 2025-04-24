@@ -2,15 +2,18 @@
   (:require
    [babashka.cli :refer [parse-args]]
    [clojure.string :as str]
+   [worktree-maker.code-setup  :as code-setup]
    [worktree-maker.git :as git]
    [worktree-maker.process :refer [execute-processes]]))
 
 (defn checkout-worktree [branch-name]
   (let [result (execute-processes
-                 (git/fetch-remote-branches)
-                 (git/ensure-branch-exists branch-name)
-                 (git/add-worktree branch-name))]
-    (println (:err result))))
+                (git/fetch-remote-branches)
+                (git/ensure-branch-exists branch-name)
+                (git/add-worktree branch-name))]
+    (if (zero? (:exit @result))
+      (code-setup/npm-ci branch-name)
+      (println (:err result)))))
 
 (def available-worktrees
   (remove
@@ -28,6 +31,11 @@
       :else
       (println ""))))
 
+(defn delete-worktree [branch-name]
+  (let [result (execute-processes (git/remove-worktree branch-name))]
+    (when-not (zero? (:exit result))
+      (println (:err result)))))
+
 (def cli-spec
   {:args [:command :branch]
    :args->opts [:command :branch]
@@ -38,10 +46,9 @@
     (case command
       "_complete" (complete args)
       "create" (checkout-worktree branch)
-      "remove" (git/remove-worktree branch)
+      "remove" (delete-worktree branch)
 
-      :else
-      "Unsupported option.")))
+      (println "Unsupported option"))))
 
 (comment
   (def args '("create" "patrick/CAN-6019-update-pull-terminology-to-submission2")))
