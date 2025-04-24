@@ -44,5 +44,16 @@
   (let [dirname (str worktree-dir "/" branch-name)]
     (str "git worktree remove " dirname)))
 
+(defn list-worktrees []
+  "git worktree list")
+
+(defn extract-worktree-paths
+  "Takes the output from `git worktree list` and splits out the paths of the
+  worktrees"
+  [worktree-cmd-output]
+  (->> worktree-cmd-output
+    str/split-lines
+    (map #(first (str/split % #" ")))))
+
 (comment
   (def test-branch-name "patrick/CAN-6019-update-pull-termidnology-to-submission"))
