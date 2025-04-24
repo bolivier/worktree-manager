@@ -31,7 +31,9 @@
     (let [process (execute command)
           {:keys [exit]} process]
       (if (zero? exit)
-        (recur (rest commands))
+        (if (empty? (rest commands))
+          process
+          (recur (rest commands)))
         (if-let [on-failure (:on-failure command)]
           (recur (conj (rest commands) on-failure))
           process)))))
