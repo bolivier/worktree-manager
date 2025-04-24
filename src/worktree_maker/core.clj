@@ -16,10 +16,10 @@
       (println (:err result)))))
 
 (def available-worktrees
-  (remove
-   #(= % git/main-worktree-dir)
-   (let [process (execute-processes (git/list-worktrees))]
-     (git/extract-worktree-paths (:out process)))))
+  (let [process (execute-processes (git/list-worktrees))
+        worktrees (git/extract-worktree-paths (:out process))]
+    (remove #(= % git/main-worktree-dir)
+            worktrees)))
 
 (def available-branches
   (:out (execute-processes (git/list-branches))))
