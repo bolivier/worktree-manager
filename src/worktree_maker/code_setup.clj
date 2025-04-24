@@ -9,5 +9,5 @@
                             "/dashboard"
                             "/react-app"]]
                   (future
-                    (shell {:dir (str path dir)} "npm ci")))]
+                    (shell {:dir (str path dir)} "npm install --prefer-offline --no-audit")))]
     (mapv deref futures)))
