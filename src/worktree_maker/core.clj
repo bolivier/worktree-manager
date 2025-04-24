@@ -61,9 +61,10 @@
 (defn -main [& args]
   (let [{:keys [branch command help]} (:opts (parse-args args cli-spec))]
     (cond
-      help (print-help-menu)
-
+      ;; This must be first to make completions work correctly
       (= command "_complete") (complete args)
+
+      help (print-help-menu)
       (= command "create") (checkout-worktree branch)
       (= command "remove") (delete-worktree branch)
 
