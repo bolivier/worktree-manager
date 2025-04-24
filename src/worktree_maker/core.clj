@@ -2,6 +2,7 @@
   (:require
    [babashka.cli :refer [parse-args]]
    [clojure.string :as str]
+   [worktree-maker.config :as config]
    [worktree-maker.code-setup  :as code-setup]
    [worktree-maker.git :as git]
    [worktree-maker.process :refer [execute-processes]]))
@@ -18,7 +19,7 @@
 (def available-worktrees
   (let [process (execute-processes (git/list-worktrees))
         worktrees (git/extract-worktree-paths (:out process))]
-    (remove #(= % git/main-worktree-dir)
+    (remove #(= % config/main-worktree-dir)
             worktrees)))
 
 (def available-branches
@@ -65,7 +66,6 @@
       (= command "_complete") (complete args)
       (= command "create") (checkout-worktree branch)
       (= command "remove") (delete-worktree branch)
-
 
       :else
       (println "Unsupported option"))))

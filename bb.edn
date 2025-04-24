@@ -1,3 +1,4 @@
 {:paths ["src" "bin"]
 
- :deps {org.babashka/cli {:mvn/version "0.8.65"}}}
+ :deps {org.babashka/cli  {:mvn/version "0.8.65"}
+        cheshire/cheshire {:mvn/version "5.11.0"}}}

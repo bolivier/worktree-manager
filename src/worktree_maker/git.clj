@@ -1,17 +1,16 @@
 (ns worktree-maker.git
   (:require
    [babashka.process :as p :refer [*defaults*]]
+   [worktree-maker.config :as config]
    [clojure.string :as str]))
 
-(def worktree-dir "/Users/brandon/work/usecanopy-worktrees")
-(def main-worktree-dir "/Users/brandon/work/usecanopy.com")
 
 (alter-var-root
  (var *defaults*)
  (fn [defaults]
    (-> defaults
        (assoc :continue true)
-       (assoc :dir main-worktree-dir)
+       (assoc :dir config/main-worktree-dir)
        (assoc :out :string)
        (assoc :err :string))))
 
@@ -29,7 +28,7 @@
     (join "git branch " branch-name remote-branch-name)))
 
 (defn branch-name->path [branch-name]
-  (str worktree-dir "/" branch-name))
+  (str config/worktree-dir "/" branch-name))
 
 (defn ensure-branch-exists [branch-name]
   {:command (branch-exists? branch-name)
