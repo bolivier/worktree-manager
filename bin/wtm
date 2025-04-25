@@ -1,5 +1,21 @@
-#!/usr/bin/env bb
+#!/usr/bin/env bash
 
-(require '[worktree-manager.core :as core])
+# Resolve the actual path of this script (follow symlinks)
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do
+  DIR="$(cd -P "$(dirname "$SOURCE")" >/dev/null 2>&1 && pwd)"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ "$SOURCE" != /* ]] && SOURCE="$DIR/$SOURCE"
+done
+SCRIPT_DIR="$(cd -P "$(dirname "$SOURCE")" >/dev/null 2>&1 && pwd)"
 
-(apply core/-main *command-line-args*)
+# The BB classpath should point to the src dir in the project
+PROJECT_ROOT="$SCRIPT_DIR"
+CLASSPATH="$PROJECT_ROOT/src"
+
+echo $PROJECT_ROOT
+
+cd "$PROJECT_ROOT"
+cd ..
+# Run the Babashka entrypoint
+exec bb -m worktree-manager.core "$@"
