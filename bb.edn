@@ -1,4 +1,12 @@
 {:paths ["src" "bin"]
 
  :deps {org.babashka/cli  {:mvn/version "0.8.65"}
-        cheshire/cheshire {:mvn/version "5.11.0"}}}
+        cheshire/cheshire {:mvn/version "5.11.0"}}
+
+ :tasks
+ {:requires ([babashka.fs :as fs])
+  install (fs/create-sym-link
+           (fs/path
+                  (System/getProperty "user.home")
+                  "bin/wtm")
+           (fs/path (fs/canonicalize ".") "bin/wtm"))}}
