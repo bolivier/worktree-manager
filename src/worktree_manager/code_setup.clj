@@ -1,6 +1,6 @@
-(ns worktree-maker.code-setup
+(ns worktree-manager.code-setup
   (:require
-   [worktree-maker.git :as git]
+   [worktree-manager.git :as git]
    [babashka.process :refer [shell]]))
 
 (def npm-install-command

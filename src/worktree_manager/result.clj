@@ -1,4 +1,4 @@
-(ns worktree-maker.result)
+(ns worktree-manager.result)
 
 (defn ok? [result]
   (try

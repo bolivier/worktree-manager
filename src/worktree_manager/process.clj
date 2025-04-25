@@ -1,4 +1,4 @@
-(ns worktree-maker.process
+(ns worktree-manager.process
   "This is for working with processes.
 
   A `process` here is a result from calling `babashka.process/process`. It

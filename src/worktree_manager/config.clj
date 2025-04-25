@@ -1,4 +1,4 @@
-(ns worktree-maker.config
+(ns worktree-manager.config
   (:require
    [babashka.fs :as fs]
    [clojure.java.io :as io]

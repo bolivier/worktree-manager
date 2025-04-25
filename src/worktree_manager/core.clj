@@ -1,11 +1,11 @@
-(ns worktree-maker.core
+(ns worktree-manager.core
   (:require
    [babashka.cli :refer [parse-args]]
    [clojure.string :as str]
-   [worktree-maker.config :as config]
-   [worktree-maker.code-setup  :as code-setup]
-   [worktree-maker.git :as git]
-   [worktree-maker.process :refer [execute-processes]]))
+   [worktree-manager.config :as config]
+   [worktree-manager.code-setup  :as code-setup]
+   [worktree-manager.git :as git]
+   [worktree-manager.process :refer [execute-processes]]))
 
 (defn checkout-worktree [branch-name]
   (let [result (execute-processes (git/fetch-remote-branches)

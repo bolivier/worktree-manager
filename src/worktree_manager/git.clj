@@ -1,7 +1,7 @@
-(ns worktree-maker.git
+(ns worktree-manager.git
   (:require
    [babashka.process :as p :refer [*defaults*]]
-   [worktree-maker.config :as config]
+   [worktree-manager.config :as config]
    [clojure.string :as str]))
 
 (alter-var-root
