@@ -13,8 +13,6 @@ SCRIPT_DIR="$(cd -P "$(dirname "$SOURCE")" >/dev/null 2>&1 && pwd)"
 PROJECT_ROOT="$SCRIPT_DIR"
 CLASSPATH="$PROJECT_ROOT/src"
 
-echo $PROJECT_ROOT
-
 cd "$PROJECT_ROOT"
 cd ..
 # Run the Babashka entrypoint

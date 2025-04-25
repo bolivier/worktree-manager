@@ -18,8 +18,9 @@
 (def available-worktrees
   (let [process (execute-processes (git/list-worktrees))
         worktrees (git/extract-worktree-paths (:out process))]
-    (remove #(= % config/main-worktree-dir)
-            worktrees)))
+    (->> worktrees
+         (remove #(= % config/main-worktree-dir))
+         (str/join "\n"))))
 
 (def available-branches
   (:out (execute-processes (git/list-branches))))
@@ -29,7 +30,7 @@
     (cond
       (or (= prev "remove")
           (= curr "remove"))
-      (println (str/join "\n" available-worktrees))
+      (println available-worktrees)
 
       (or (= prev "create")
           (= curr "create"))

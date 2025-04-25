@@ -1,5 +1,6 @@
 function __wtm_complete
-  wtm _complete (commandline -opc)
+  set -l tokens (commandline -opc)
+  wtm _complete $tokens
 end
 
-complete -c wtm -a "(__wtm_complete)"
+complete -c wtm -f -a '(__wtm_complete)'
