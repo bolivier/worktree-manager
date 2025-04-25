@@ -5,7 +5,8 @@
    [cheshire.core :as json]))
 
 (defn get-config-path []
-  (let [xdg-home (System/getenv "XDG_CONFIG_HOME")
+  (let [xdg-home (or (System/getenv "XDG_CONFIG_HOME")
+                     (fs/path (System/getProperty "user.home") ".config"))
         home     (System/getProperty "user.home")
         xdg-path (fs/path xdg-home "worktree-manager" "config.json")
         dot-path (fs/path home ".worktree-manager")]
