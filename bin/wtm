@@ -1,5 +1,5 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bb
 
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-cd "$SCRIPT_DIR/.."
-exec bb -m  worktree-manager.core "$@"
+(require '[worktree-manager.core :as core])
+
+(apply core/-main *command-line-args*)
