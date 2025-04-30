@@ -69,9 +69,10 @@ jobs:
           git add .
           git commit -m "Update formula for version ${{ steps.vars.outputs.version }}"
 
-          echo $?
+          echo "$(git log)"
 
           git push origin "$BRANCH"
+
 
       - name: Create pull request
         uses: peter-evans/create-pull-request@v6
