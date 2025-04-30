@@ -12,7 +12,10 @@
                                   (git/ensure-branch-exists branch-name)
                                   (git/add-worktree branch-name))]
     (if (zero? (:exit @result))
-      (code-setup/npm-ci branch-name)
+      (try
+       (code-setup/npm-ci branch-name)
+       (catch Exception _
+         "Could not install dependencies.  Please handle manually.  Sorry for the inconvenience."))
       (println (:err result)))))
 
 (def available-worktrees
