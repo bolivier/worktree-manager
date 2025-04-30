@@ -36,6 +36,10 @@
           (= curr "create"))
       (println available-branches)
 
+
+      (= curr "wtm")
+      (println "create\nremove")
+
       :else
       (println ""))))
 
