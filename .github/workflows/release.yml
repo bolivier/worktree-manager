@@ -53,6 +53,7 @@ jobs:
           SHA="${{ steps.shasum.outputs.sha256 }}"
 
           sed "s|__VERSION__|$VERSION|g; s|__SHA__|$SHA|g" "$TEMPLATE_PATH" > "$OUTPUT_PATH"
+          cat $OUTPUT_PATH
 
       - name: Commit and push updated formula
         run: |
