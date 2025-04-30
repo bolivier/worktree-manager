@@ -22,7 +22,7 @@ jobs:
       - name: Package release tarball
         run: |
           mkdir release
-          cp -r bin src bb.edn README.md LICENSE release/
+          cp -r bin src bb.edn README.md release/
           tar -czf worktree-manager.tar.gz -C release .
 
       - name: Calculate SHA256
