@@ -1,19 +1,26 @@
 #!/usr/bin/env bash
 
-# Resolve the actual path of this script (follow symlinks)
+# Resolve the absolute path of this script, following symlinks
 SOURCE="${BASH_SOURCE[0]}"
 while [ -h "$SOURCE" ]; do
   DIR="$(cd -P "$(dirname "$SOURCE")" >/dev/null 2>&1 && pwd)"
   SOURCE="$(readlink "$SOURCE")"
   [[ "$SOURCE" != /* ]] && SOURCE="$DIR/$SOURCE"
 done
-SCRIPT_DIR="$(cd -P "$(dirname "$SOURCE")" >/dev/null 2>&1 && pwd)"
+SCRIPT_PATH="$(cd -P "$(dirname "$SOURCE")" >/dev/null 2>&1 && pwd)"
 
-# The BB classpath should point to the src dir in the project
-PROJECT_ROOT="$SCRIPT_DIR"
+# Determine if this is a Homebrew install
+if [[ -f "$SCRIPT_PATH/../libexec/src/worktree_manager/core.clj" ]]; then
+  # Homebrew layout:
+  # /usr/local/Cellar/worktree-manager/0.1.0/bin/wtm
+  # /usr/local/Cellar/worktree-manager/0.1.0/libexec/src/...
+  PROJECT_ROOT="$SCRIPT_PATH/../libexec"
+else
+  # Development layout (e.g. repo clone with bin/wtm)
+  PROJECT_ROOT="$SCRIPT_PATH/.."
+fi
+
 CLASSPATH="$PROJECT_ROOT/src"
 
-cd "$PROJECT_ROOT"
-cd ..
-# Run the Babashka entrypoint
-exec bb -m worktree-manager.core "$@"
+cd "$PROJECT_ROOT" || exit 1
+exec bb --classpath "$CLASSPATH" -m worktree-manager.core "$@"
