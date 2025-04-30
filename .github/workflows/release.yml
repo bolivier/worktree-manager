@@ -63,6 +63,9 @@ jobs:
 
           BRANCH="update-formula-${{ steps.vars.outputs.version }}"
           git checkout -b "$BRANCH"
+
+          cat Formula/worktree-manager.rb
+
           git add Formula/worktree-manager.rb
           git commit -m "Update formula for version ${{ steps.vars.outputs.version }}"
           git push origin "$BRANCH"
