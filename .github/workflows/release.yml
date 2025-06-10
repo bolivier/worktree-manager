@@ -24,6 +24,7 @@ jobs:
           mkdir release
           cp -r bin src bb.edn resources README.md release/
           tar -czf worktree-manager.tar.gz -C release .
+          sync
 
       - name: Calculate SHA256
         id: shasum
@@ -34,7 +35,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: '24'
 
       - name: Verify tarball
         run: |
