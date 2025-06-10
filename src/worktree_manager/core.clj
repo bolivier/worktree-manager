@@ -39,9 +39,8 @@
           (= curr "create"))
       (println available-branches)
 
-
       (= curr "wtm")
-      (println "create\nremove")
+      (println "create\nremove\nlist\nswitch")
 
       :else
       (println ""))))
@@ -64,6 +63,8 @@
   (println "Commands:")
   (println "  create <branch>     Create a new worktree for the given branch")
   (println "  remove <wt-path>    Remove an existing worktree")
+  (println "  list                List current worktrees")
+  (println "  switch              Switch to a worktree, selected with fzf")
   (println)
   (println "Options:")
   (println "  --help              Print this help menu"))
@@ -77,6 +78,9 @@
       help (print-help-menu)
       (= command "create") (checkout-worktree branch)
       (= command "remove") (delete-worktree branch)
+      (= command "list")   (println available-worktrees)
+
+      (= command "switch") (println "Error: you must install the shell integration to use `switch`")
 
       :else
       (println "Unsupported option"))))
