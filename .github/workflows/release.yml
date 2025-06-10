@@ -37,6 +37,23 @@ jobs:
           files: worktree-manager.tar.gz
           token: ${{ secrets.HOMEBREW_CI_TOKEN_PAT }}
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Verify tarball
+        run: |
+          tar -tzf worktree-manager.tar.gz
+
+      - name: Upload tarball to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: worktree-manager.tar.gz
+          token: ${{ secrets.HOMEBREW_CI_TOKEN_PAT }}
+          env:
+            ACTIONS_STEP_DEBUG: true
+
       - name: Clone homebrew tap repo
         uses: actions/checkout@v4
         with:
