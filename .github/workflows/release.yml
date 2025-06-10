@@ -31,12 +31,6 @@ jobs:
           SHA=$(shasum -a 256 worktree-manager.tar.gz | awk '{print $1}')
           echo "sha256=$SHA" >> "$GITHUB_OUTPUT"
 
-      - name: Upload tarball to GitHub Release
-        uses: softprops/action-gh-release@v2
-        with:
-          files: worktree-manager.tar.gz
-          token: ${{ secrets.HOMEBREW_CI_TOKEN_PAT }}
-
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
