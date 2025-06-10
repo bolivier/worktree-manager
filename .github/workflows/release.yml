@@ -51,8 +51,6 @@ jobs:
         with:
           files: worktree-manager.tar.gz
           token: ${{ secrets.HOMEBREW_CI_TOKEN_PAT }}
-          env:
-            ACTIONS_STEP_DEBUG: true
 
       - name: Clone homebrew tap repo
         uses: actions/checkout@v4
