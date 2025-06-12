@@ -13,7 +13,29 @@ Branch names do not need `origin` prefixed. Local branches are automatically cre
 Available options are
 - `create`: creates a new worktree from a branch (specifying `origin` is not necessary)
 - `remove`: removes an existing worktree (autocompletes from `worktree-dir`)
+- `list`  : lists your available worktrees
+- `switch`: brings up a fzf prompt to select a worktree and changes cwd to that worktree. 
 - `--help`: prints a help menu
+
+
+> [!IMPORTANT]  
+> You must install the appropriate shell function `wtm` for the `switch` command to work properly.
+
+## Shell Function
+
+In order to use the `switch` command you'll need to add the wtm function to your shell like this:
+#### ~/.bashrc or ~/.bash_profile
+source $(brew --prefix)/share/wtm/wtm.bash
+
+#### ~/.zshrc
+source $(brew --prefix)/share/wtm/wtm.zsh
+
+#### Fish
+ln -s (brew --prefix)/share/wtm/wtm.fish ~/.config/fish/functions/wtm.fish
+
+or
+
+source (brew --prefix)/share/wtm/wtm.fish
 
 ## Configuration
 
