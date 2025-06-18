@@ -1,11 +1,17 @@
 # Worktree Manager
 
+<div style="display: flex; "
 <img src="./resources/logo.png" width="300">
 
+<div>
+<p>
 Makes using worktrees easier
-
+</p>
+<p>
 At the core, it just creates a new worktree with a branch name and installs deps.
-
+</p>
+</div>
+</div>
 ## Usage
 
 `wtm <option> <branch-or-path>`
