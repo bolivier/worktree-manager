@@ -13,9 +13,11 @@
                                   (git/add-worktree branch-name))]
     (if (zero? (:exit @result))
       (try
+
         (code-setup/run-jobs branch-name)
-        (catch Exception _
-          "Could not run jobs.  Please handle manually.  Sorry for the inconvenience."))
+        (catch Exception e
+          (println "Could not run jobs.  Please handle manually.  Sorry for the inconvenience.")
+          (println (.getMessage e))))
       (println (:err result)))))
 
 (def available-worktrees

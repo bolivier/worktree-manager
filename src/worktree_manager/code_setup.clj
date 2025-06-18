@@ -60,12 +60,12 @@
 (defmulti parse-job get-job-type)
 
 (defmethod parse-job :string [command]
-  {:commmand command
+  {:command command
    :dir "."})
 
 (defmethod parse-job :multi-dir [{:keys [dirs command]}]
   (mapv (fn [dir]
-          {:commmand command
+          {:command command
            :dir dir})
         dirs))
 
