@@ -7,6 +7,7 @@ At the core, it just creates a new worktree with a branch name and installs deps
 
 <img src="./resources/logo.png" width="300" align="right" />
 </p>
+
 ## Usage
 
 `wtm <option> <branch-or-path>`
