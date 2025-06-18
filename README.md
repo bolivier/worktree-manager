@@ -1,20 +1,12 @@
 # Worktree Manager
+  
+<img src="resources/logo.png" alt="wtm logo" width="170" align="right" />
 
-<table border="0">
-  <tr>
-    <td style="text-align: right; width: 30%;">
-      <img src="resources/logo.png" alt="wtm logo" width="150"/>
-    </td>
-    <td style="vertical-align: top; width: 70%;">
-      <p>
-        Worktree Manager (wtm) is a CLI tool that makes Git worktree workflows easier and more pleasant, especially during code reviews.
-      </p>
-      <p>
-        It helps you <code>create</code>, <code>switch</code>, and <code>remove</code> worktrees to make code review easier.
-      </p>
-    </td>
-  </tr>
-</table>
+Worktree Manager (wtm) is a CLI tool that makes Git worktree workflows easier and more pleasant, especially during code reviews.
+
+It helps you <code>create</code>, <code>switch</code>, and <code>remove</code> worktrees to make code review easier.
+
+It can also install dependencies and run jobs.
 
 ## Usage
 
