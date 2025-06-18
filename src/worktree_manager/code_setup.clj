@@ -69,6 +69,11 @@
            :dir dir})
         dirs))
 
+(defmethod parse-job :single-dir [{:keys [dir command]
+                                   :or {dir "."}}]
+  {:command command
+   :dir dir})
+
 (defmethod parse-job :default [job] job)
 
 (defn parse-jobs [config-jobs]

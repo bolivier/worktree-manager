@@ -1,4 +1,4 @@
-{:paths ["src" "bin"]
+{:paths ["src" "bin" "test"]
 
  :deps {org.babashka/cli  {:mvn/version "0.8.65"}
         cheshire/cheshire {:mvn/version "5.11.0"}}
@@ -7,4 +7,11 @@
  {:requires ([babashka.fs :as fs])
   install (fs/create-sym-link
            (fs/path (System/getProperty "user.home") "bin/wtm")
-           (fs/path (fs/canonicalize ".") "bin/wtm"))}}
+           (fs/path (fs/canonicalize ".") "bin/wtm"))
+
+  test {:requires ([kaocha.runner :as tester])
+        :extra-paths ["test"]
+        :extra-deps {lambdaisland/kaocha {:mvn/version "1.91.1392"}
+                     pjstadig/humane-test-output          {:mvn/version "0.11.0"}
+                     com.github.seancorfield/expectations {:mvn/version "2.2.214"}}
+        :task (apply tester/-main *command-line-args*)}}}
