@@ -1,10 +1,12 @@
 # Worktree Manager
 
-<p>
+<p align="left">
 Makes using worktrees easier
-
+</p>
+<p align="left">
 At the core, it just creates a new worktree with a branch name and installs deps.
-
+</p>
+<p align="right">
 <img src="./resources/logo.png" width="300" align="right" />
 </p>
 
