@@ -13,9 +13,9 @@
                                   (git/add-worktree branch-name))]
     (if (zero? (:exit @result))
       (try
-       (code-setup/npm-ci branch-name)
-       (catch Exception _
-         "Could not install dependencies.  Please handle manually.  Sorry for the inconvenience."))
+        (code-setup/run-jobs branch-name)
+        (catch Exception _
+          "Could not run jobs.  Please handle manually.  Sorry for the inconvenience."))
       (println (:err result)))))
 
 (def available-worktrees
