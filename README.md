@@ -55,7 +55,7 @@ Note that both of these should be **absolute paths**.
 
 ``` json
 {
-  "worktree-dir": "/Users/brandon/work/worktrees",
+  "worktree-dir": "<absolute path to a directory to put worktrees>",
   "main-worktree-dir": "<absolute path to your project file>",
   "jobs": []
 }
@@ -66,7 +66,7 @@ Jobs are run after you create a worktree, and are defined in your config file.
 
 There are 3 kinds of valid jobs
 
-Strings are a valid job.  This is a command that will be run in the root directory.
+Strings are a valid job.  This is a command that will be run in `main-worktree-dir`.
 
 There are two kinds of object jobs. Both have a key `command`, which is the
 command to run, but you can additionally specify `dir` to run that command in a
