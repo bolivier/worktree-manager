@@ -20,7 +20,5 @@ else
   PROJECT_ROOT="$SCRIPT_PATH/.."
 fi
 
-CLASSPATH="$PROJECT_ROOT/src"
-
 cd "$PROJECT_ROOT" || exit 1
-exec bb --classpath "$CLASSPATH" -m worktree-manager.core "$@"
+exec bb -m worktree-manager.core "$@"
