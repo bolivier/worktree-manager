@@ -1,5 +1,6 @@
 (ns worktree-manager.core
   (:require
+   [bblgum.core :as b]
    [babashka.cli :refer [parse-args]]
    [clojure.string :as str]
    [worktree-manager.config :as config]
@@ -47,10 +48,24 @@
       :else
       (println ""))))
 
+(declare delete-worktree)
+
+(defn bulk-delete []
+  (let [{:keys [result]} (b/gum :choose (str/split-lines available-worktrees) :no-limit true)]
+    (->> result
+         (map (fn [wt]
+                (println "deleting" wt)
+                (future (do (delete-worktree wt)
+                            (println "Done deleting" wt)))))
+         doall
+         (mapv deref))))
+
 (defn delete-worktree [branch-name]
-  (let [result (execute-processes (git/remove-worktree branch-name))]
-    (when-not (zero? (:exit result))
-      (println (:err result)))))
+  (if (nil? branch-name)
+    (bulk-delete)
+    (let [result (execute-processes (git/remove-worktree branch-name))]
+      (when-not (zero? (:exit result))
+        (println (:err result))))))
 
 (def cli-spec
   {:args [:command :branch]

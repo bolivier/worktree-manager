@@ -1,6 +1,7 @@
 {:paths ["src" "bin" "test"]
 
  :deps {org.babashka/cli  {:mvn/version "0.8.65"}
+        io.github.lispyclouds/bblgum {:git/sha "2f39b2c0d5ca83054c97173207b324bf2adb8066"}
         cheshire/cheshire {:mvn/version "5.11.0"}}
 
  :tasks

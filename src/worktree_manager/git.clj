@@ -42,7 +42,7 @@
     :pre-check (branch-exists? branch-name)}))
 
 (defn remove-worktree [path]
-  (str "git worktree remove " path))
+  (str "git worktree remove --force " path))
 
 (defn list-worktrees []
   "git worktree list")
